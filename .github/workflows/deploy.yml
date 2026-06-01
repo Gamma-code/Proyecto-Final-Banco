@@ -1,0 +1,49 @@
+
+name: CI/CD - Banco Nexus
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Iniciar sesion en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Construir y subir imagen del BACKEND
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/banco-backend:latest
+
+      - name: Construir y subir imagen del FRONTEND
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/banco-frontend:latest
+
+      - name: Desplegar en el Swarm de AWS (rolling update)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/banco-final
+            # Baja la version mas reciente del codigo (para tener el stack file)
+            git pull origin main
+            # Trae las imagenes nuevas desde Docker Hub
+            docker pull ${{ secrets.DOCKERHUB_USER }}/banco-backend:latest
+            docker pull ${{ secrets.DOCKERHUB_USER }}/banco-frontend:latest
+            # Ordena al Swarm actualizar los servicios sin caida
+            docker stack deploy -c docker-stack.yml banco --with-registry-auth

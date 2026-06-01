@@ -1,0 +1,55 @@
+
+version: "3.8"
+
+services:
+  backend:
+    image: TU_USUARIO_DOCKERHUB/banco-backend:latest
+    networks:
+      - bancanet
+    environment:
+      - DB_NAME=banco_final
+      - PORT=3001
+      - MONGO_URI_FILE=/run/secrets/mongo_uri
+      - JWT_SECRET_FILE=/run/secrets/jwt_secret
+    secrets:
+      - mongo_uri
+      - jwt_secret
+    deploy:
+      replicas: 2                       
+      placement:
+        constraints:
+          - node.labels.rol == backend  
+        max_replicas_per_node: 1        
+      update_config:
+        parallelism: 1                  
+        delay: 10s
+        order: start-first              
+      restart_policy:
+        condition: on-failure
+
+  frontend:
+    image: TU_USUARIO_DOCKERHUB/banco-frontend:latest
+    networks:
+      - bancanet
+    ports:
+      - "80:80"                         
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.rol == frontend
+      update_config:
+        parallelism: 1
+        order: start-first
+      restart_policy:
+        condition: on-failure
+
+networks:
+  bancanet:
+    driver: overlay                    
+
+secrets:
+  mongo_uri:
+    external: true                      
+  jwt_secret:
+    external: true

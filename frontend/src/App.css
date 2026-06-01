@@ -1,0 +1,100 @@
+:root {
+  --azul: #0a3d62;
+  --azul-claro: #1e6091;
+  --verde: #16a34a;
+  --rojo: #dc2626;
+  --gris: #f4f6f8;
+  --borde: #e2e8f0;
+  --texto: #1e293b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--gris);
+  color: var(--texto);
+}
+
+.app { max-width: 920px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ---------- Header ---------- */
+.header {
+  background: var(--azul);
+  color: #fff;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 { font-size: 22px; }
+.subtitle { font-size: 13px; opacity: .8; }
+.user-box { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.user-box span { font-weight: 600; }
+.user-box small { opacity: .8; font-family: monospace; }
+
+/* ---------- Tabs ---------- */
+.tabs { display: flex; gap: 4px; background: #fff; padding: 8px 16px; border-bottom: 1px solid var(--borde); flex-wrap: wrap; }
+.tab {
+  border: none; background: transparent; padding: 8px 16px; cursor: pointer;
+  border-radius: 8px; font-size: 14px; color: #64748b;
+}
+.tab:hover { background: var(--gris); }
+.tab.active { background: var(--azul); color: #fff; }
+
+/* ---------- Content ---------- */
+.content { flex: 1; padding: 24px; }
+.footer { text-align: center; padding: 16px; font-size: 12px; color: #94a3b8; }
+
+/* ---------- Saldo card ---------- */
+.saldo-card {
+  background: linear-gradient(135deg, var(--azul), var(--azul-claro));
+  color: #fff; border-radius: 16px; padding: 28px; margin-bottom: 24px;
+}
+.saldo-card p { opacity: .85; font-size: 14px; }
+.saldo-card h2 { font-size: 38px; margin: 6px 0; }
+.saldo-card h2 small { font-size: 16px; opacity: .8; }
+.cuenta-num { font-family: monospace; opacity: .85; }
+
+/* ---------- Tablas ---------- */
+.tabla { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; }
+.tabla th, .tabla td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--borde); font-size: 14px; }
+.tabla th { background: var(--gris); font-weight: 600; }
+.tabla code { font-size: 11px; color: #64748b; }
+.cargo { color: var(--rojo); font-weight: 600; }
+.abono { color: var(--verde); font-weight: 600; }
+
+h3 { margin: 20px 0 12px; color: var(--azul); }
+.vacio { color: #94a3b8; font-style: italic; }
+.lista { list-style: none; }
+.lista li { background: #fff; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--borde); }
+
+/* ---------- Formularios ---------- */
+.form-card { background: #fff; padding: 24px; border-radius: 14px; border: 1px solid var(--borde); max-width: 460px; }
+.form-card label { display: block; font-size: 13px; color: #64748b; margin: 10px 0 4px; }
+input, select {
+  width: 100%; padding: 11px 13px; border: 1px solid var(--borde);
+  border-radius: 9px; font-size: 14px; margin-bottom: 12px; background: #fff;
+}
+input:focus, select:focus { outline: none; border-color: var(--azul-claro); }
+input:disabled { background: var(--gris); color: #94a3b8; }
+
+.btn {
+  width: 100%; padding: 12px; background: var(--azul); color: #fff;
+  border: none; border-radius: 9px; font-size: 15px; cursor: pointer; font-weight: 600;
+}
+.btn:hover { background: var(--azul-claro); }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn-ghost { background: rgba(255,255,255,.15); color: #fff; border: none; padding: 6px 12px; border-radius: 7px; cursor: pointer; }
+
+.alert { padding: 10px 14px; border-radius: 9px; font-size: 14px; margin-bottom: 12px; }
+.alert.error { background: #fef2f2; color: var(--rojo); border: 1px solid #fecaca; }
+.alert.ok { background: #f0fdf4; color: var(--verde); border: 1px solid #bbf7d0; }
+
+/* ---------- Auth ---------- */
+.auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--azul), var(--azul-claro)); padding: 20px; }
+.auth-card { background: #fff; padding: 36px; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+.auth-card h1 { color: var(--azul); text-align: center; }
+.auth-card .subtitle { color: #64748b; text-align: center; margin-bottom: 20px; }
+.switch { text-align: center; margin-top: 14px; font-size: 14px; color: #64748b; }
+.switch a { color: var(--azul-claro); cursor: pointer; font-weight: 600; }
