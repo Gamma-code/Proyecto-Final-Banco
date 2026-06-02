@@ -3,7 +3,7 @@ version: "3.8"
 
 services:
   backend:
-    image: TU_USUARIO_DOCKERHUB/banco-backend:latest
+    image: gammas/banco-backend:latest
     networks:
       - bancanet
     environment:
@@ -28,7 +28,7 @@ services:
         condition: on-failure
 
   frontend:
-    image: TU_USUARIO_DOCKERHUB/banco-frontend:latest
+    image: gammas/banco-frontend:latest
     networks:
       - bancanet
     ports:
